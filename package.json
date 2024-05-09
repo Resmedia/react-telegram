@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "homepage": "https://telegram-mini-apps.github.io/reactjs-template",
+  "homepage": "https://github.com/Resmedia/react-telegram",
   "scripts": {
     "deploy": "gh-pages -d dist",
     "dev": "vite",
@@ -11,7 +11,8 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview",
-    "predeploy": "pnpm run build"
+    "predeploy": "pnpm run build",
+    "sert-mac": "cd ./ssl && bash generate.sh && sudo security add-trusted-cert -d -r trustRoot -p ssl -k /Library/Keychains/System.keychain ./server.cert"
   },
   "dependencies": {
     "@tma.js/react-router-integration": "^0.1.2",

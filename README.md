@@ -1,5 +1,19 @@
 # Telegram Mini Apps React Boilerplate
 
+Add SSL
+
+```bash
+#Add domain to hosts
+echo "127.0.0.1 t2c.docker" >> /etc/hosts
+# Add SSL
+pnpm run sert-mac
+# build on first run
+docker build -t app-t2c .
+# Run docker
+docker-compose up -d
+docker-compose down
+```
+
 This boilerplate demonstrates how developers can implement a single-page application on the Telegram
 Mini Apps platform using the following technologies:
 
