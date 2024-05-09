@@ -10,12 +10,12 @@ import './InitDataPage.css';
 
 function getUserRows(user: User): DisplayDataRow[] {
   return [
-    { title: 'id', value: user.id.toString() },
-    { title: 'last_name', value: user.lastName },
-    { title: 'first_name', value: user.firstName },
-    { title: 'is_bot', value: user.isBot },
-    { title: 'is_premium', value: user.isPremium },
-    { title: 'language_code', value: user.languageCode },
+    { title: 'ID', value: user.id.toString() },
+    { title: 'Фамилия', value: user.lastName },
+    { title: 'Имя', value: user.firstName },
+    { title: 'Робот?', value: user.isBot },
+    { title: 'Премиум', value: user.isPremium },
+    { title: 'Язык', value: user.languageCode },
   ];
 }
 
@@ -28,26 +28,26 @@ export const InitDataPage: FC = () => {
       return;
     }
     const {
-      hash,
-      queryId,
-      chatType,
-      chatInstance,
+      // hash,
+      // queryId,
+      // chatType,
+      // chatInstance,
       authDate,
-      startParam,
-      canSendAfter,
-      canSendAfterDate,
+      // startParam,
+      // canSendAfter,
+      // canSendAfterDate,
     } = initData;
     return [
-      { title: 'raw', value: initDataRaw },
-      { title: 'auth_date', value: authDate.toLocaleString() },
-      { title: 'auth_date (raw)', value: authDate.getTime() / 1000 },
-      { title: 'hash', value: hash },
-      { title: 'can_send_after', value: canSendAfterDate?.toISOString() },
-      { title: 'can_send_after (raw)', value: canSendAfter },
-      { title: 'query_id', value: queryId },
-      { title: 'start_param', value: startParam },
-      { title: 'chat_type', value: chatType },
-      { title: 'chat_instance', value: chatInstance },
+      { title: 'DATA', value: initDataRaw },
+      { title: 'Дата авторизации', value: authDate.toLocaleString() },
+      { title: 'Дата авторизации UNIX', value: authDate.getTime() / 1000 },
+      // { title: 'ХЕШ', value: hash },
+      // { title: 'can_send_after', value: canSendAfterDate?.toISOString() },
+      // { title: 'can_send_after (raw)', value: canSendAfter },
+      // { title: 'query_id', value: queryId },
+      // { title: 'start_param', value: startParam },
+      // { title: 'chat_type', value: chatType },
+      // { title: 'chat_instance', value: chatInstance },
     ];
   }, [initData, initDataRaw]);
 
@@ -66,45 +66,61 @@ export const InitDataPage: FC = () => {
     const { id, title, type, username, photoUrl } = initData.chat;
 
     return [
-      { title: 'id', value: id.toString() },
-      { title: 'title', value: title },
-      { title: 'type', value: type },
-      { title: 'username', value: username },
-      { title: 'photo_url', value: photoUrl },
+      { title: 'ID', value: id.toString() },
+      { title: 'Название', value: title },
+      { title: 'Тип', value: type },
+      { title: 'Логин', value: username },
+      { title: 'URL фото', value: photoUrl },
     ];
   }, [initData]);
 
   let contentNode: ReactNode;
 
   if (!initDataRows) {
-    contentNode = <i>Application was launched with missing init data</i>;
+    contentNode = <i>
+      Данные не переданы. Проверьте ссылку и убедитесь, что она содержит параметры запуска.
+    </i>;
   } else {
     contentNode = (
       <>
         <div className="init-data-page__section">
-          <h2 className="init-data-page__section-title">Init data</h2>
+          <h2 className="init-data-page__section-title">
+            Данные инициализации
+          </h2>
           <DisplayData rows={initDataRows} />
         </div>
 
         <div className="init-data-page__section">
-          <h2 className="init-data-page__section-title">User</h2>
+          <h2 className="init-data-page__section-title">
+            Пользователь
+          </h2>
           {userRows
             ? <DisplayData rows={userRows} />
-            : <i>User information missing</i>}
+            : <i>
+              Информация о пользователе отсутствует. Возможно, пользователь не авторизован.
+            </i>}
         </div>
 
         <div className="init-data-page__section">
-          <h2 className="init-data-page__section-title">Receiver</h2>
+          <h2 className="init-data-page__section-title">
+            Получатель
+          </h2>
           {receiverRows
             ? <DisplayData rows={receiverRows} />
-            : <i>Receiver information missing</i>}
+            : <i>
+              Информация о получателе отсутствует. Возможно, получатель не авторизован.
+            </i>}
         </div>
 
         <div className="init-data-page__section">
-          <h2 className="init-data-page__section-title">Chat</h2>
+          <h2 className="init-data-page__section-title">
+            Чат
+          </h2>
           {chatRows
             ? <DisplayData rows={chatRows} />
-            : <i>Chat information missing</i>}
+            : <i>
+              Информация о чате отсутствует. Возможно, чат не передан.
+            </i>}
         </div>
       </>
     );
@@ -112,13 +128,13 @@ export const InitDataPage: FC = () => {
 
   return (
     <Page
-      title="Init Data"
+      title="Передаваемые данные TG"
       disclaimer={(
         <>
-          This page displays application
+          Страница для демонстрации передаваемых данных в приложение. Подробнее о передаваемых данных можно
           {' '}
           <Link to="https://docs.telegram-mini-apps.com/platform/launch-parameters">
-            init data
+            прочитать в разделе
           </Link>
           .
         </>

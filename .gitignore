@@ -11,6 +11,8 @@ lerna-debug.log*
 ssl/server.cert
 ssl/server.key
 
+package-lock.json
+
 node_modules
 dist
 dist-ssr

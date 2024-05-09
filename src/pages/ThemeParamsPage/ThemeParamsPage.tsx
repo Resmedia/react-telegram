@@ -10,15 +10,14 @@ export const ThemeParamsPage: FC = () => {
 
   return (
     <Page
-      title="Theme Params"
+      title="Параметры темы"
       disclaimer={(
         <>
-          This page displays current
+          Эти параметры используются для настройки темы приложения.
           {' '}
           <Link to="https://docs.telegram-mini-apps.com/platform/theming">
-            theme parameters
+            Подробнее о них можно прочитать в документации
           </Link>
-          . It is reactive, so, changing theme externally will lead to this page updates.
         </>
       )}
     >

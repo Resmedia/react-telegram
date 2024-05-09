@@ -10,13 +10,13 @@ export const LaunchParamsPage: FC = () => {
 
   return (
     <Page
-      title="Launch Params"
+      title="Параметры запуска"
       disclaimer={(
         <>
-          This page displays application
+          Эти параметры передаются в приложение при запуске. Подробнее о них можно
           {' '}
           <Link to="https://docs.telegram-mini-apps.com/platform/launch-parameters">
-            launch parameters
+            прочитать в разделе
           </Link>
           .
         </>

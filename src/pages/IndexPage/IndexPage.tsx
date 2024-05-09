@@ -8,10 +8,9 @@ import './IndexPage.css';
 
 export const IndexPage: FC = () => {
   return (
-    <Page title="Home Page">
-      <p>
-        This page is a home page in this boilerplate. You can use the links below to visit other
-        pages with their own functionality.
+    <Page title="Привет Дмитрий!">
+      <p className="panel">
+        Это стартовая страница для демонстрации возможностей, запущенная в Docker контейнере на локальной машине, без деполя куда либо.
       </p>
       <ul className="index-page__links">
         {routes.map(({ path, title, icon }) => title && (
