@@ -7,6 +7,7 @@ import { Link } from '~/components/Link.tsx';
 import { Modal } from '~/components/Modal.tsx';
 import { Icon } from '~/components/svg/Icon.tsx';
 import { TabBar } from '~/components/TabBar.tsx';
+import { BoostWindow } from '~/screens/BoostWindow.tsx';
 
 const Content = styled.div`
   display: flex;
@@ -102,9 +103,15 @@ const AirDrop = styled.div`
 
 interface MasterProps {
   children: any;
+  openWindow: '' | 'boost';
+  onWindowClose: () => void;
 }
 
-export const Master: JSXElementConstructor<any> = ({ children }: MasterProps) => {
+export const Master: JSXElementConstructor<any> = ({
+  children,
+  openWindow,
+  onWindowClose,
+}: MasterProps) => {
   const cookies = new Cookies();
 
 // TODO Remove when airdrop is implemented
@@ -112,11 +119,19 @@ export const Master: JSXElementConstructor<any> = ({ children }: MasterProps) =>
   const navigator = useNavigate();
 
   const [isShow, setShowModal] = useState<boolean>(false);
+  const [showWindow, setShowWindow] = useState<string>('');
 
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const lastVisit = cookies.get('boost5');
+      setShowWindow(openWindow);
+      if (openWindow) {
+        document.querySelector('body')?.classList.add('stop-scrolling');
+      }
+  }, [openWindow]);
+
+  useEffect(() => {
+    const lastVisit = cookies.get('boost6');
     if (lastVisit) {
       const diff = Date.now() - lastVisit;
       if (diff > 1000 * 60 * 60 * 3) {
@@ -137,46 +152,55 @@ export const Master: JSXElementConstructor<any> = ({ children }: MasterProps) =>
   }, [location.pathname]);
 
   const onClose = () => {
-    cookies.set('boost5', Date.now());
+    cookies.set('boost6', Date.now());
     setOpen(false);
   };
 
+  const closeWindow = () => {
+    document.querySelector('body')?.classList.remove('stop-scrolling');
+    setShowWindow('');
+    onWindowClose();
+  };
+
   return (
-    <Area>
-      {children}
-      <TabBar />
-      <Modal id="airdrop" isOpen={isShow} onClose={() => setShowModal(false)}>
-        <ModalContent>
-          <Img src="/images/coin-gold.svg" alt="Coin status" />
-          <AirDrop>
-            Airdrop
-          </AirDrop>
-          <Text>
-            Coming soon
-          </Text>
-        </ModalContent>
-      </Modal>
-      <Modal id="boost" onClose={onClose} isOpen={open}>
-        <Content>
-          <Icon icon="rocket" width="135px" height="135px" active={false} />
-          <Title>
-            Увеличте вашу
-            <br />
-            прибыль!
-          </Title>
-          <Text>
-            Перейдите в меню маркет и купите улучшения для увеличения
-            {' '}
-            вашей прибыли. Зарабатывайте в оффлайн в течении
-            {' '}
-            <Active>3-х часов</Active>
-            .
-          </Text>
-          <Button to="/market" onClick={onClose}>
-            Перейти в маркет
-          </Button>
-        </Content>
-      </Modal>
-    </Area>
+    <>
+      <Area>
+        {children}
+        <TabBar />
+        <Modal id="airdrop" isOpen={isShow} onClose={() => setShowModal(false)}>
+          <ModalContent>
+            <Img src="/images/coin-gold.svg" alt="Coin status" />
+            <AirDrop>
+              Airdrop
+            </AirDrop>
+            <Text>
+              Coming soon
+            </Text>
+          </ModalContent>
+        </Modal>
+        <Modal id="boost" onClose={onClose} isOpen={open}>
+          <Content>
+            <Icon icon="rocket" width="135px" height="135px" active={false} />
+            <Title>
+              Увеличте вашу
+              <br />
+              прибыль!
+            </Title>
+            <Text>
+              Перейдите в меню маркет и купите улучшения для увеличения
+              {' '}
+              вашей прибыли. Зарабатывайте в оффлайн в течении
+              {' '}
+              <Active>3-х часов</Active>
+              .
+            </Text>
+            <Button to="/market" onClick={onClose}>
+              Перейти в маркет
+            </Button>
+          </Content>
+        </Modal>
+      </Area>
+      <BoostWindow open={showWindow === 'boost'} onClose={closeWindow} />
+    </>
     );
 };

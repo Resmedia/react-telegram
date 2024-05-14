@@ -71,6 +71,11 @@ export const GlobalStyle = createGlobalStyle`
 
     background: #060606;
     color: white;
+    
+    
+    &.stop-scrolling {
+      overflow: hidden;
+    }
   }
 
   blockquote {

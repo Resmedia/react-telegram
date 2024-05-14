@@ -1,5 +1,5 @@
+import { type FC, useState } from 'react';
 import styled from 'styled-components';
-import type { FC } from 'react';
 
 import { Master } from '~/components/Master.tsx';
 import { Icon } from '~/components/svg/Icon.tsx';
@@ -144,15 +144,75 @@ const CoinStatus = styled.div`
 const Img = styled.img`
   width: 100%;
   height: auto;
+  position: relative;
+  z-index: -1;
+`;
+
+const StatusBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+  width: 100%;
+  margin-bottom: 100px;
+`;
+
+const Label = styled.span`
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: var(--tc-gray);
+`;
+
+const Gold = styled.span`
+  color: var(--tc-gold);
+`;
+
+const TopStatus = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+`;
+
+const Bar = styled.div`
+  width: 100%;
+  height: 16px;
+  margin-top: 5px;
+  background: var(--tc-panel);
+  border-radius: 12px;
+`;
+
+const Lvl = styled.span`
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: var(--tc-gray);
+  margin-left: 5px;
+`;
+
+const Progress = styled.div`
+  width: 70%;
+  height: 100%;
+  background: var(--tc-gold);
+  border-radius: 12px;
 `;
 
 export const Main: FC = () => {
+  const [open, setOpen] = useState<string>('');
   const owner = {
     avatar: 'https://loremflickr.com/60/60',
     name: 'Mike Williamson',
   };
+  const openBoostWindow = () => {
+    setOpen('boost');
+  };
   return (
-    <Master>
+    <Master openWindow={open} onWindowClose={() => setOpen('')}>
       <TopArea>
         <OwnerArea>
           <OwnerAvatar src={owner.avatar} />
@@ -199,13 +259,29 @@ export const Main: FC = () => {
             1000
           </Maximum>
         </CountBoost>
-        <ButtonBoost>
+        <ButtonBoost onClick={openBoostWindow}>
           <Icon icon="rocket" width="40px" height="40px" active={false} />
         </ButtonBoost>
       </BoostArea>
       <CoinStatus>
         <Img src="/images/coin-gold.svg" alt="Coin status" />
       </CoinStatus>
+      <StatusBar>
+        <TopStatus>
+          <Label>
+            Bronze
+          </Label>
+          <Lvl>
+            LVL
+            {' '}
+            <Gold>1</Gold>
+            /10
+          </Lvl>
+        </TopStatus>
+        <Bar>
+          <Progress />
+        </Bar>
+      </StatusBar>
     </Master>
   );
 };

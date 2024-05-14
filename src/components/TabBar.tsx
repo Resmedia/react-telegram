@@ -8,6 +8,7 @@ import { Icon } from '~/components/svg/Icon.tsx';
 const TabBarArea = styled.nav`
   display: flex;
   position: fixed;
+  z-index: 100;
   bottom: 0;
   left: 0;
   right: 0;
