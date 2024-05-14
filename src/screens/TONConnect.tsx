@@ -3,12 +3,10 @@ import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
 import type { FC, ReactNode } from 'react';
 
 import { DisplayData } from '~/components/DisplayData/DisplayData.tsx';
-import { Link } from '~/components/Link/Link.tsx';
-import { Page } from '~/components/Page/Page.tsx';
+import { Link } from '~/components/Link.tsx';
+import { Master } from '~/components/Master.tsx';
 
-import './TONConnectPage.css';
-
-export const TONConnectPage: FC = () => {
+export const TONConnect: FC = () => {
   const wallet = useTonWallet();
   const utils = useUtils();
   let content: ReactNode;
@@ -70,11 +68,11 @@ export const TONConnectPage: FC = () => {
   }
 
   return (
-    <Page title="TON Connect">
+    <Master>
       {content}
       <div className="ton-connect-page__button-container">
         <TonConnectButton />
       </div>
-    </Page>
+    </Master>
   );
 };

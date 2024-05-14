@@ -13,6 +13,7 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    project: './tsconfig.json',
     ecmaFeatures: {
       jsx: true
     },
@@ -23,14 +24,15 @@ module.exports = {
     'simple-import-sort',
   ],
   rules: {
+    '@typescript-eslint/dot-notation': 'error',
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/indent': 0,
     // Sometimes this rule decreases readability.
     'arrow-body-style': 0,
     'consistent-return': 0,
     'function-paren-newline': 0,
-
     // We use special module resolution, that's why we need extensions.
+    'import/no-extraneous-dependencies': 0,
     'import/extensions': 0,
     'import/first': 'error',
     'import/newline-after-import': 'error',

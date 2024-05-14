@@ -4,9 +4,7 @@ import type { User } from '@tma.js/sdk';
 
 import { DisplayData, type DisplayDataRow } from '~/components/DisplayData/DisplayData.tsx';
 import { Link } from '~/components/Link/Link.tsx';
-import { Page } from '~/components/Page/Page.tsx';
-
-import './InitDataPage.css';
+import { Master } from '~/components/Master.tsx';
 
 function getUserRows(user: User): DisplayDataRow[] {
   return [
@@ -77,9 +75,11 @@ export const InitDataPage: FC = () => {
   let contentNode: ReactNode;
 
   if (!initDataRows) {
-    contentNode = <i>
-      Данные не переданы. Проверьте ссылку и убедитесь, что она содержит параметры запуска.
-    </i>;
+    contentNode = (
+      <i>
+        Данные не переданы. Проверьте ссылку и убедитесь, что она содержит параметры запуска.
+      </i>
+    );
   } else {
     contentNode = (
       <>
@@ -96,9 +96,11 @@ export const InitDataPage: FC = () => {
           </h2>
           {userRows
             ? <DisplayData rows={userRows} />
-            : <i>
-              Информация о пользователе отсутствует. Возможно, пользователь не авторизован.
-            </i>}
+            : (
+              <i>
+                Информация о пользователе отсутствует. Возможно, пользователь не авторизован.
+              </i>
+)}
         </div>
 
         <div className="init-data-page__section">
@@ -107,9 +109,11 @@ export const InitDataPage: FC = () => {
           </h2>
           {receiverRows
             ? <DisplayData rows={receiverRows} />
-            : <i>
-              Информация о получателе отсутствует. Возможно, получатель не авторизован.
-            </i>}
+            : (
+              <i>
+                Информация о получателе отсутствует. Возможно, получатель не авторизован.
+              </i>
+)}
         </div>
 
         <div className="init-data-page__section">
@@ -118,29 +122,27 @@ export const InitDataPage: FC = () => {
           </h2>
           {chatRows
             ? <DisplayData rows={chatRows} />
-            : <i>
-              Информация о чате отсутствует. Возможно, чат не передан.
-            </i>}
+            : (
+              <i>
+                Информация о чате отсутствует. Возможно, чат не передан.
+              </i>
+)}
         </div>
       </>
     );
   }
 
   return (
-    <Page
-      title="Передаваемые данные TG"
-      disclaimer={(
-        <>
-          Страница для демонстрации передаваемых данных в приложение. Подробнее о передаваемых данных можно
-          {' '}
-          <Link to="https://docs.telegram-mini-apps.com/platform/launch-parameters">
-            прочитать в разделе
-          </Link>
-          .
-        </>
-      )}
-    >
+    <Master>
+      Страница для демонстрации передаваемых данных в
+      {' '}
+      приложение. Подробнее о передаваемых данных можно
+      {' '}
+      <Link to="https://docs.telegram-mini-apps.com/platform/launch-parameters">
+        прочитать в разделе
+      </Link>
+      .
       {contentNode}
-    </Page>
+    </Master>
   );
 };

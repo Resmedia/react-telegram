@@ -1,10 +1,15 @@
-import { setDebug } from '@tma.js/sdk';
+import {
+  ClosingBehavior,
+  postEvent,
+  setDebug,
+} from '@tma.js/sdk';
 import { DisplayGate, SDKProvider, useLaunchParams } from '@tma.js/sdk-react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { type FC, useEffect, useMemo } from 'react';
 
 import { App } from '~/components/App.tsx';
 import { ErrorBoundary } from '~/components/ErrorBoundary.tsx';
+import { GlobalStyle } from '~/globalStyle.tsx';
 
 const DisplayError: FC<{ error: unknown }> = ({ error }) => (
   <blockquote>
@@ -33,14 +38,22 @@ const ErrorBoundarySDK: FC<{ error: unknown }> = ({ error }) => (
   </div>
 );
 
-const Loading: FC = () => <div>Application is loading</div>;
+const Loading: FC = () => <div>Немного терпения</div>;
 
 const Inner: FC = () => {
   const launchParams = useLaunchParams();
 
+  postEvent('web_app_setup_back_button', { is_visible: false });
+  postEvent('web_app_setup_settings_button', { is_visible: false });
+  postEvent('web_app_set_header_color', { color: '#060606' });
+
   const manifestUrl = useMemo(() => {
     return new URL('tonconnect-manifest.json', window.location.href).toString();
   }, []);
+
+  const closingBehaviour = new ClosingBehavior(false, postEvent);
+
+  closingBehaviour.enableConfirmation();
 
   // Enable debug mode to see all the methods sent and events received.
   useEffect(() => {
@@ -54,6 +67,7 @@ const Inner: FC = () => {
     <TonConnectUIProvider manifestUrl={manifestUrl}>
       <SDKProvider options={{ acceptCustomStyles: true, cssVars: true, complete: true }}>
         <DisplayGate error={ErrorBoundarySDK} loading={Loading} initial={Loading}>
+          <GlobalStyle />
           <App />
         </DisplayGate>
       </SDKProvider>
