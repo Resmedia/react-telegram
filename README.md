@@ -8,7 +8,7 @@
 - [@tma.js SDK](https://docs.telegram-mini-apps.com/packages/tma-js-sdk)
 - [Vite](https://vitejs.dev/)
 
-- [Example](Resmedia/react-telegram/blob/main/example.webm)
+- [Example](https://github.com/Resmedia/react-telegram/blob/main/example.webm)
 
 ## Getting Started with Docker
 
