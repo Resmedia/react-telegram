@@ -1,5 +1,7 @@
 # Telegram Mini App - T2C
 
+## Starter for mini app in Telegram
+
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [TON Connect](https://docs.ton.org/develop/dapps/ton-connect/overview)
